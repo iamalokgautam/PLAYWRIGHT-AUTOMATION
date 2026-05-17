@@ -1,4 +1,4 @@
-const { test } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 test('Browser playwright test', async ({ browser }) => {
     const context = await browser.newContext()
@@ -9,6 +9,8 @@ test('Browser playwright test', async ({ browser }) => {
 
 test('Page playwright test', async ({ page }) => {
 
-    await page.goto("https://www.w3schools.com/");
+    await page.goto("https://google.com");
+    console.log(await page.title());
+    await expect(page).toHaveTitle('Google');
 
 });
