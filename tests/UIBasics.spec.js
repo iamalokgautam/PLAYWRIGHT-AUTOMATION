@@ -1,9 +1,25 @@
 const { test, expect } = require('@playwright/test');
 
-test('Browser playwright test', async ({ browser }) => {
+test.only('Browser playwright test', async ({ browser }) => {
+
+
     const context = await browser.newContext()
     const page = await context.newPage();
-    await page.goto("https://rahulshettyacademy.com/practice");
+    const userName = page.locator('#username');
+    const password = page.locator("[type='password']");
+    const SignIn = page.locator("#signInBtn");
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    //CSS
+
+    await userName.fill("rahulshetty");
+    await password.fill("Learning@830$3mK2");
+    await SignIn.click();
+    console.log(await page.locator("[style*='block']").textContent());
+    await expect(page.locator("[style*='block']")).toContainText("Incorrect");
+    await userName.fill("");
+    await userName.fill("rahulshettyacademy");
+    await SignIn.click();
+
 
 });
 
