@@ -8,6 +8,7 @@ test.only('Browser playwright test', async ({ browser }) => {
     const userName = page.locator('#username');
     const password = page.locator("[type='password']");
     const SignIn = page.locator("#signInBtn");
+    const cardTitles = page.locator(".card-body a");
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     //CSS
 
@@ -19,6 +20,12 @@ test.only('Browser playwright test', async ({ browser }) => {
     await userName.fill("");
     await userName.fill("rahulshettyacademy");
     await SignIn.click();
+
+    console.log(await cardTitles.nth(0).textContent());
+    console.log(await cardTitles.last().textContent());
+    console.log(await cardTitles.allTextContents());
+
+
 
 
 });
