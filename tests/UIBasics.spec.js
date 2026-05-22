@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.only('Browser playwright test', async ({ browser }) => {
+test('Browser playwright test', async ({ browser }) => {
 
 
     const context = await browser.newContext()
@@ -35,5 +35,21 @@ test('Page playwright test', async ({ page }) => {
     await page.goto("https://google.com");
     console.log(await page.title());
     await expect(page).toHaveTitle('Google');
+
+});
+
+test.only('UI Controles', async ({ page }) => {
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const userName = page.locator('#username');
+    const password = page.locator("[type='password']");
+    const dropdown = page.locator("select.form-control");
+
+    await dropdown.selectOption("consult");
+    await page.locator(".radiotextsty").last().click();
+    await page.locator("#okayBtn").click();
+    //await page.pause();
+
+
+
 
 });
