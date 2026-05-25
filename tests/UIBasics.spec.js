@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { text } = require('node:stream/consumers');
 
 test('Browser playwright test', async ({ browser }) => {
 
@@ -38,7 +39,7 @@ test('Page playwright test', async ({ page }) => {
 
 });
 
-test.only('UI Controles', async ({ page }) => {
+test('UI Controles', async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const userName = page.locator('#username');
     const password = page.locator("[type='password']");
@@ -48,7 +49,38 @@ test.only('UI Controles', async ({ page }) => {
     await page.locator(".radiotextsty").last().click();
     await page.locator("#okayBtn").click();
     //await page.pause();
+    await expect(page.locator(".radiotextsty").last()).toBeChecked();
+    console.log(await page.locator(".radiotextsty").last().isChecked()); //true
+    await page.locator("#terms").click();
+    await expect(page.locator("#terms")).toBeChecked();
+    await page.locator("#terms").uncheck();
+    expect(await page.locator("#terms").isChecked()).toBeFalsy();
 
+
+
+
+
+
+});
+
+test.only('Child window handl', async ({ browser }) => {
+
+    const context = await browser.newContext()
+    const page = await context.newPage();
+
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    const documentLink = page.locator("[href*='documents-request']");
+
+
+    const [newPage] = await Promise.all(
+        [context.waitForEvent('page'),
+        documentLink.click(),]
+    )
+
+    const text = await newPage.locator(".red").textContent();
+    const arrText = text.split("@");
+    const email = arrText[1].split(" ")[0]
+    console.log(email);
 
 
 
