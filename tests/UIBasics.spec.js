@@ -67,6 +67,7 @@ test.only('Child window handl', async ({ browser }) => {
 
     const context = await browser.newContext()
     const page = await context.newPage();
+    const userName = page.locator('#username');
 
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
     const documentLink = page.locator("[href*='documents-request']");
@@ -79,8 +80,11 @@ test.only('Child window handl', async ({ browser }) => {
 
     const text = await newPage.locator(".red").textContent();
     const arrText = text.split("@");
-    const email = arrText[1].split(" ")[0]
-    console.log(email);
+    const domain = arrText[1].split(" ")[0]
+    console.log(domain);
+    await userName.fill(domain);
+    await page.pause();
+    console.log(await userName.textContent());
 
 
 
